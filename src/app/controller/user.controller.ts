@@ -10,10 +10,14 @@ userRouter.post(
   async (req: Request, res: Response): Promise<void> => {
     try {
       const validatedData = userValidationSchema.parse(req.body);
-      const savedUser = await User.create(validatedData);
+      // const savedUser = await User.create(validatedData);
+
+      //** Instance mathod */
+      const user = new  User(validatedData)
+      await user.save()
 
       // Don't send password back in response
-      const userResponse = savedUser.toObject();
+      const userResponse = user.toObject();
       delete (userResponse as any).password;
 
       res.status(201).json({

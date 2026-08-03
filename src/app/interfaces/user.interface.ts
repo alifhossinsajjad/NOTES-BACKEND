@@ -1,8 +1,21 @@
+import { Model } from "mongoose";
+
 export interface IUser {
     firstName: string,
     lastName : string,
     email:string,
     password : string,
-    role : 'user'| 'admin'
+    role : 'USER'| 'ADMIN' | 'SUPPER ADMIN',
+    address?: {
+        city: string,
+        street: string,
+        zipcode: string
+    },
+    phoneNumber?: string
 }
 
+export interface IUserMethods {
+    isPasswordMatched(plainTextPassword: string): Promise<boolean>;
+}
+
+export type UserModel = Model<IUser, {}, IUserMethods>;

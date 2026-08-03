@@ -43,7 +43,10 @@ notesRouter.get(
   async (req: Request, res: Response): Promise<void> => {
     try {
       // Note.find() returns all documents in the Note collection
-      const notes = await Note.find();
+      const notes = await Note.find().populate({
+        path: "user",
+        select: "-password",
+      });
 
       res.status(200).json({
         success: true,
@@ -65,7 +68,10 @@ notesRouter.get(
   "/:id",
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const note = await Note.findById(req.params.id);
+      const note = await Note.findById(req.params.id).populate({
+        path: "user",
+        select: "-password",
+      });
       if (!note) {
         res.status(404).json({ success: false, message: "Note not found" });
         return;
