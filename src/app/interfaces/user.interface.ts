@@ -9,9 +9,9 @@ export interface IUser {
     address?: {
         city: string,
         street: string,
-        zipcode: string
+        zipcode: number
     },
-    phoneNumber?: string
+    phoneNumber?: number
 }
 
 export interface IUserMethods {
